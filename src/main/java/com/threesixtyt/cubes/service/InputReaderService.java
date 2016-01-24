@@ -1,4 +1,4 @@
-package com.threesixty.cubes.service;
+package com.threesixtyt.cubes.service;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-import com.threesixty.cubes.domain.Piece;
+import com.threesixtyt.cubes.domain.Piece;
 
 public class InputReaderService {
 	private File f;

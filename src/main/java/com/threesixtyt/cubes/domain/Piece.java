@@ -1,12 +1,26 @@
-package com.threesixty.cubes.domain;
+package com.threesixtyt.cubes.domain;
 
 public class Piece {
 	private boolean[][] edges;
 	private int rotateCount;
 
+	public int getRotateCount() {
+		return rotateCount;
+	}
+
 	public Piece() {
 		edges = new boolean[4][5];
 		rotateCount = 0;
+	}
+
+	public Piece(Piece pieceToCopy) {
+		edges = new boolean[4][5];
+		rotateCount = pieceToCopy.getRotateCount();
+		for (int i = 0; i < 4; i++) {
+			for (int j = 0; j < 5; j++) {
+				edges[i][j] = pieceToCopy.getEdge(i + pieceToCopy.getRotateCount())[j];
+			}
+		}
 	}
 
 	private void initializeRow(int rowNr, boolean[] rowContent) {
@@ -54,7 +68,7 @@ public class Piece {
 	public void printRow(int rowNr) {
 		switch (rowNr) {
 		case 0:
-			for (Boolean b : edges[(0 - rotateCount) % 4]) {
+			for (Boolean b : edges[(4 - rotateCount) % 4]) {
 				if (b) {
 					System.out.print("o");
 				} else {
@@ -64,21 +78,36 @@ public class Piece {
 			break;
 		case 4:
 			for (int i = 4; i >= 0; i--) {
-				if (edges[(2 - rotateCount) % 4][i]) {
+				if (edges[(6 - rotateCount) % 4][i]) {
 					System.out.print("o");
 				} else {
 					System.out.print(" ");
 				}
 			}
 			break;
+		case 2:
+			if (edges[(7 - rotateCount) % 4][4 - rowNr]) {
+				System.out.print("o");
+			} else {
+				System.out.print(" ");
+			}
+			System.out.print("o");
+			System.out.print(rotateCount);
+			System.out.print("o");
+			if (edges[(5 - rotateCount) % 4][rowNr]) {
+				System.out.print("o");
+			} else {
+				System.out.print(" ");
+			}
+			break;
 		default:
-			if (edges[(3 - rotateCount) % 4][4 - rowNr]) {
+			if (edges[(7 - rotateCount) % 4][4 - rowNr]) {
 				System.out.print("o");
 			} else {
 				System.out.print(" ");
 			}
 			System.out.print("ooo");
-			if (edges[(1 - rotateCount) % 4][rowNr]) {
+			if (edges[(5 - rotateCount) % 4][rowNr]) {
 				System.out.print("o");
 			} else {
 				System.out.print(" ");
@@ -88,7 +117,7 @@ public class Piece {
 	}
 
 	public boolean[] getEdge(int edgeNr) {
-		return edges[(edgeNr - rotateCount) % 4];
+		return edges[(edgeNr - rotateCount + 4) % 4];
 	}
 
 	public boolean isMatch(Piece piece, int edgeNr) {
@@ -100,8 +129,7 @@ public class Piece {
 			if (!result) {
 				break;
 			}
-			result = result && (edge[i] || edge2[4 - i]);
-			result = result && !(edge[i] && edge2[4 - i]);
+			result = result && (edge[i] ^ edge2[4 - i]);
 
 		}
 		return result;
