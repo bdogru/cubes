@@ -85,21 +85,6 @@ public class Piece {
 				}
 			}
 			break;
-		case 2:
-			if (edges[(7 - rotateCount) % 4][4 - rowNr]) {
-				System.out.print("o");
-			} else {
-				System.out.print(" ");
-			}
-			System.out.print("o");
-			System.out.print(rotateCount);
-			System.out.print("o");
-			if (edges[(5 - rotateCount) % 4][rowNr]) {
-				System.out.print("o");
-			} else {
-				System.out.print(" ");
-			}
-			break;
 		default:
 			if (edges[(7 - rotateCount) % 4][4 - rowNr]) {
 				System.out.print("o");
