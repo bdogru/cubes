@@ -16,7 +16,7 @@ public class Piece {
 			edges[1][0] = rowContent[4];
 			edges[3][4] = rowContent[0];
 			break;
-		case 3:
+		case 4:
 			for (int i = 0; i < 5; i++) {
 				edges[2][i] = rowContent[4 - i];
 			}
@@ -31,9 +31,9 @@ public class Piece {
 	}
 
 	public void initializeRow(int rowNr, char[] rowContent) {
-		if (rowContent.length != 5 || rowNr > 3) {
+		if (rowContent.length != 5 || rowNr > 5) {
 			throw new IllegalArgumentException(
-					"Row Number should be between 0-3 and Row Content should have 5 elements.");
+					"Row Number should be between 0-5 and Row Content should have 5 elements.");
 		}
 		boolean[] boolRowContent = new boolean[5];
 		for (int i = 0; i < 5; i++) {

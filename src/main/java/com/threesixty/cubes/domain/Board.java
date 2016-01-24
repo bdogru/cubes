@@ -1,5 +1,7 @@
 package com.threesixty.cubes.domain;
 
+import java.util.List;
+
 public class Board {
 	private Piece[][] board;
 
@@ -22,14 +24,15 @@ public class Board {
 
 	public void printBoard() {
 		for (Piece[] line : board) {
-			for (Piece piece : line) {
-				for (int rowNr = 0; rowNr < 5; rowNr++) {
+			for (int rowNr = 0; rowNr < 5; rowNr++) {
+				for (Piece piece : line) {
 					if (piece == null) {
 						System.out.print("     ");
 					} else {
 						piece.printRow(rowNr);
 					}
 				}
+				System.out.print(System.lineSeparator());
 			}
 			System.out.print(System.lineSeparator());
 		}
@@ -49,7 +52,7 @@ public class Board {
 	public void shiftDown() {
 		for (int i = getBoardLength() - 2; i >= 0; i--) {
 			for (int j = 0; j < getBoardLength(); j++) {
-				board[i+1][j] = board[i][j];
+				board[i + 1][j] = board[i][j];
 			}
 		}
 	}
@@ -57,8 +60,14 @@ public class Board {
 	public void shiftRight() {
 		for (int i = getBoardLength() - 2; i >= 0; i--) {
 			for (int j = 0; j < getBoardLength(); j++) {
-				board[j][i+1] = board[j][i];
+				board[j][i + 1] = board[j][i];
 			}
+		}
+	}
+
+	public void testInput(List<Piece> pieces) {
+		for (int i = 0; i < pieces.size(); i++) {
+			board[i][i] = pieces.get(i);
 		}
 	}
 }
