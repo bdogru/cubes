@@ -1,9 +1,29 @@
 package com.threesixtyt.cubes.domain;
 
+/**
+ * Puzzle Piece
+ * 
+ * @author Bekir Dogru
+ *
+ */
 public class Piece {
+	/**
+	 * four edges of a piece, every edge consists of 5 booleans which indicates
+	 * if this part is blank or not. </br>
+	 * edges and booleans are ordered clockwise </br>
+	 * <code>false</code> if blank </br>
+	 * <code>true</code> if not blank
+	 */
 	private boolean[][] edges;
+	/**
+	 * keeps the number of rotation applied on the piece
+	 */
 	private int rotateCount;
 
+	/**
+	 * 
+	 * @return {@link Piece#rotateCount}
+	 */
 	public int getRotateCount() {
 		return rotateCount;
 	}
@@ -13,6 +33,11 @@ public class Piece {
 		rotateCount = 0;
 	}
 
+	/**
+	 * copy constuctor
+	 * 
+	 * @param pieceToCopy
+	 */
 	public Piece(Piece pieceToCopy) {
 		edges = new boolean[4][5];
 		rotateCount = pieceToCopy.getRotateCount();
@@ -44,6 +69,14 @@ public class Piece {
 		}
 	}
 
+	/**
+	 * initializes the row by the data read by the input file
+	 * 
+	 * @param rowNr
+	 *            row number of the piece that data indicates
+	 * @param rowContent
+	 *            data from the input file
+	 */
 	public void initializeRow(int rowNr, char[] rowContent) {
 		if (rowContent.length != 5 || rowNr > 5) {
 			throw new IllegalArgumentException(
@@ -60,11 +93,20 @@ public class Piece {
 		initializeRow(rowNr, boolRowContent);
 	}
 
+	/**
+	 * Rotates the piece by 90 degrees
+	 */
 	public void rotate() {
 		rotateCount++;
 		rotateCount %= 4;
 	}
 
+	/**
+	 * Prints the specified row of the piece to the {@link System#out}
+	 * 
+	 * @param rowNr
+	 *            row to be printed
+	 */
 	public void printRow(int rowNr) {
 		switch (rowNr) {
 		case 0:
@@ -101,10 +143,25 @@ public class Piece {
 		}
 	}
 
+	/**
+	 * 
+	 * @param edgeNr
+	 *            which edge to be returned
+	 * @return desired edge
+	 */
 	public boolean[] getEdge(int edgeNr) {
 		return edges[(edgeNr - rotateCount + 4) % 4];
 	}
 
+	/**
+	 * Checks if this piece is matching with another piece by the specified edge
+	 * 
+	 * @param piece
+	 *            second piece to check if match
+	 * @param edgeNr
+	 *            edge to be checked
+	 * @return
+	 */
 	public boolean isMatch(Piece piece, int edgeNr) {
 		boolean[] edge = getEdge(edgeNr);
 		boolean[] edge2 = piece.getEdge((edgeNr + 2) % 4);

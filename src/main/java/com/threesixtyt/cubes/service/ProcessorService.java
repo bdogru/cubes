@@ -8,7 +8,24 @@ import java.util.List;
 import com.threesixtyt.cubes.domain.Board;
 import com.threesixtyt.cubes.domain.Piece;
 
+/**
+ * Main processing service class
+ * 
+ * @author Bekir Dogru
+ *
+ */
 public class ProcessorService {
+	/**
+	 * Recursive methods that gets the last state of the board and list of the
+	 * all free pieces
+	 * 
+	 * @param board
+	 *            last state of the board
+	 * @param pieces
+	 *            list of the free pieces
+	 * @return result board state</br>
+	 *         <code>null</code> if all pieces couldn't be but by this variation
+	 */
 	public Board process(Board board, List<Piece> pieces) {
 		if (pieces.isEmpty()) {
 			return board;
@@ -28,9 +45,22 @@ public class ProcessorService {
 		return null;
 	}
 
+	/**
+	 * Tries to find a matching place for one piece
+	 * 
+	 * @param board
+	 *            last state of the board
+	 * @param piece
+	 *            piece to look for matching place
+	 * @return all possible board states by placing piece
+	 */
 	private List<Board> findPlace(Board board, Piece piece) {
 		List<Board> boards = new ArrayList<Board>();
 		for (int i = 0; i < board.getBoardLength(); i++) {
+			/**
+			 * Checks if position is null or not, if it is not null then tries
+			 * to put piece to the four surrounding places
+			 */
 			for (int j = 0; j < board.getBoardLength(); j++) {
 				if (board.getPiece(i, j) == null) {
 					continue;
@@ -44,6 +74,20 @@ public class ProcessorService {
 		return boards;
 	}
 
+	/**
+	 * Checks if the piece is matching to the specified location by rotating
+	 * four times, and returns all possible board states
+	 * 
+	 * @param board
+	 *            last state of the board
+	 * @param i
+	 *            location line
+	 * @param j
+	 *            location column
+	 * @param piece
+	 *            piece to check if match to the specified location
+	 * @return all possible board states by placing the piece
+	 */
 	private List<Board> check(Board board, int i, int j, Piece piece) {
 		List<Board> result = new ArrayList<Board>();
 		if (board.getPiece(i, j) != null) {
@@ -75,6 +119,18 @@ public class ProcessorService {
 		return result;
 	}
 
+	/**
+	 * Checks if two pieces are match by the specified edge of the p1 differs by
+	 * {@link Piece#isMatch(Piece, int)} by <code>null</code> check
+	 * 
+	 * @param p1
+	 * @param p2
+	 * @param edge
+	 *            edge number of the p1
+	 * @return <code>false</code> if not matching</br>
+	 *         <code>true</code>if either of the pieces is null or matching each
+	 *         other
+	 */
 	private boolean isMatch(Piece p1, Piece p2, int edge) {
 		if (p1 == null || p2 == null) {
 			return true;
@@ -82,6 +138,15 @@ public class ProcessorService {
 		return p1.isMatch(p2, edge);
 	}
 
+	/**
+	 * checks if corners of four pieces are match for each other
+	 * 
+	 * @param p1
+	 * @param p2
+	 * @param p3
+	 * @param p4
+	 * @return
+	 */
 	private boolean isMatchCorner(Piece p1, Piece p2, Piece p3, Piece p4) {
 		boolean isAllFourFilled = false;
 		if (p1 != null && p2 != null && p3 != null && p4 != null) {
@@ -101,8 +166,8 @@ public class ProcessorService {
 			trueCount++;
 		}
 		boolean result = false;
-		if(isAllFourFilled) {
-			if(trueCount == 1) {
+		if (isAllFourFilled) {
+			if (trueCount == 1) {
 				result = true;
 			}
 		} else if (trueCount <= 1) {

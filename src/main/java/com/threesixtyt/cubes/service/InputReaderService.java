@@ -11,6 +11,12 @@ import java.util.List;
 
 import com.threesixtyt.cubes.domain.Piece;
 
+/**
+ * Service class that is responsible to read data from the input file
+ * 
+ * @author Bekir Dogru
+ *
+ */
 public class InputReaderService {
 	private File f;
 
@@ -18,6 +24,11 @@ public class InputReaderService {
 		f = new File(filePath);
 	}
 
+	/**
+	 * Reads input file line by line, constructs pieces
+	 * 
+	 * @return all constructed pieces that is read from the input file
+	 */
 	public List<Piece> getPiecesFromFile() {
 		FileReader fr = null;
 		try {
