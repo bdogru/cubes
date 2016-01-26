@@ -83,8 +83,9 @@ public class ProcessorService {
 	}
 
 	private boolean isMatchCorner(Piece p1, Piece p2, Piece p3, Piece p4) {
+		boolean isAllFourFilled = false;
 		if (p1 != null && p2 != null && p3 != null && p4 != null) {
-			return p1.getEdge(2)[0] ^ p2.getEdge(3)[0] ^ p3.getEdge(1)[0] ^ p4.getEdge(0)[0];
+			isAllFourFilled = true;
 		}
 		int trueCount = 0;
 		if (p1 != null && p1.getEdge(2)[0]) {
@@ -99,9 +100,14 @@ public class ProcessorService {
 		if (p4 != null && p4.getEdge(0)[0]) {
 			trueCount++;
 		}
-		if (trueCount > 1) {
-			return false;
+		boolean result = false;
+		if(isAllFourFilled) {
+			if(trueCount == 1) {
+				result = true;
+			}
+		} else if (trueCount <= 1) {
+			result = true;
 		}
-		return true;
+		return result;
 	}
 }
