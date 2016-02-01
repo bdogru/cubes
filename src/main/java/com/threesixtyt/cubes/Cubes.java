@@ -23,7 +23,7 @@ public class Cubes {
 		}
 		InputReaderService irs = new InputReaderService(inputFileName);
 		List<Piece> pieces = irs.getPiecesFromFile();
-		Board board = new Board(pieces.size());
+		Board board = new Board();
 		Piece firstPiece = pieces.remove(0);
 		board.putFirstPieces(firstPiece);
 		ProcessorService ps = new ProcessorService();

@@ -20,11 +20,11 @@ public class Board {
 	 * @param pieceCount
 	 *            number of pieces read from the input file
 	 */
-	public Board(int pieceCount) {
-		if (pieceCount < 1) {
-			throw new IllegalArgumentException("There has to be some pieces");
-		}
-		board = new Piece[pieceCount][pieceCount];
+	public Board() {
+//		if (pieceCount < 1) {
+//			throw new IllegalArgumentException("There has to be some pieces");
+//		}
+		board = new Piece[4][4];
 	}
 
 	/**
@@ -34,10 +34,10 @@ public class Board {
 	 * @param b
 	 */
 	public Board(Board b) {
-		int pieceCount = b.getBoardLength();
-		board = new Piece[pieceCount][pieceCount];
-		for (int i = 0; i < pieceCount; i++) {
-			for (int j = 0; j < pieceCount; j++) {
+//		int pieceCount = b.getBoardLength();
+		board = new Piece[4][4];
+		for (int i = 0; i < 4; i++) {
+			for (int j = 0; j < 4; j++) {
 				board[i][j] = b.getPiece(i, j);
 			}
 		}

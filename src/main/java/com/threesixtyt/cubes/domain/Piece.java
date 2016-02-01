@@ -27,7 +27,7 @@ public class Piece {
 	public int getRotateCount() {
 		return rotateCount;
 	}
-
+	private int nr;
 	public Piece() {
 		edges = new boolean[4][5];
 		rotateCount = 0;
@@ -46,6 +46,7 @@ public class Piece {
 				edges[i][j] = pieceToCopy.getEdge(i + pieceToCopy.getRotateCount())[j];
 			}
 		}
+		this.nr = pieceToCopy.getNr();
 	}
 
 	private void initializeRow(int rowNr, boolean[] rowContent) {
@@ -176,4 +177,28 @@ public class Piece {
 		}
 		return result;
 	}
+	
+	public boolean isMatch(Piece piece, int edgeNr, int edgeNr2) {
+		boolean[] edge = getEdge(edgeNr);
+		boolean[] edge2 = piece.getEdge(edgeNr2);
+		boolean result = true;
+		result = (!(edge[0] && edge2[4])) && (!(edge[4] && edge2[0]));
+		for (int i = 1; i < 4; i++) {
+			if (!result) {
+				break;
+			}
+			result = result && (edge[i] ^ edge2[4 - i]);
+
+		}
+		return result;
+	}
+
+	public int getNr() {
+		return nr;
+	}
+
+	public void setNr(int nr) {
+		this.nr = nr;
+	}
+	
 }

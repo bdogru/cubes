@@ -41,6 +41,7 @@ public class InputReaderService {
 		List<Piece> pieces = new LinkedList<Piece>();
 		String line;
 		List<Piece> linePieces = null;
+		int pieceNr = 0;
 		try {
 			for (int counter = 0; (line = br.readLine()) != null; counter++) {
 				if (counter % 5 == 0) {
@@ -53,6 +54,8 @@ public class InputReaderService {
 					}
 					if (counter % 5 == 0) {
 						Piece p = new Piece();
+						p.setNr(pieceNr);
+						pieceNr++;
 						linePieces.add(p);
 					}
 					linePieces.get((i / 5)).initializeRow(counter % 5, row);
