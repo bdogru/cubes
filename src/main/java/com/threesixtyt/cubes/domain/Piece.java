@@ -158,7 +158,22 @@ public class Piece {
 		if (!isReflected) {
 			return edges[(edgeNr - rotateCount + 4) % 4];
 		}
-		if(edgeNr == 0 || edgeNr == 2) {
+		if(rotateCount%2==0) {
+			if(edgeNr %2 ==0) {
+				boolean[] result = new boolean[5];
+				for(int i = 0; i<5; i++) {
+					result[i] = edges[(edgeNr - rotateCount + 4) % 4][4-i];
+				}
+				return result;
+			}
+			boolean[] result = new boolean[5];
+			for(int i = 0; i<5; i++) {
+				result[i] = edges[(edgeNr - rotateCount + 6) % 4][4-i];
+			}
+			return result;
+		}
+
+		if(edgeNr %2 == 1) {
 			boolean[] result = new boolean[5];
 			for(int i = 0; i<5; i++) {
 				result[i] = edges[(edgeNr - rotateCount + 4) % 4][4-i];
