@@ -102,8 +102,8 @@ public class Piece {
 	 * Rotates the piece by 90 degrees
 	 */
 	public void rotate() {
-			rotateCount++;
-			rotateCount %= 4;
+		rotateCount++;
+		rotateCount %= 4;
 	}
 
 	/**
@@ -158,36 +158,36 @@ public class Piece {
 		if (!isReflected) {
 			return edges[(edgeNr - rotateCount + 4) % 4];
 		}
-		if(rotateCount%2==0) {
-			if(edgeNr %2 ==0) {
+		if (rotateCount % 2 == 0) {
+			if (edgeNr % 2 == 0) {
 				boolean[] result = new boolean[5];
-				for(int i = 0; i<5; i++) {
-					result[i] = edges[(edgeNr - rotateCount + 4) % 4][4-i];
+				for (int i = 0; i < 5; i++) {
+					result[i] = edges[(edgeNr - rotateCount + 4) % 4][4 - i];
 				}
 				return result;
 			}
 			boolean[] result = new boolean[5];
-			for(int i = 0; i<5; i++) {
-				result[i] = edges[(edgeNr - rotateCount + 6) % 4][4-i];
+			for (int i = 0; i < 5; i++) {
+				result[i] = edges[(edgeNr - rotateCount + 6) % 4][4 - i];
 			}
 			return result;
 		}
 
-		if(edgeNr %2 == 1) {
+		if (edgeNr % 2 == 1) {
 			boolean[] result = new boolean[5];
-			for(int i = 0; i<5; i++) {
-				result[i] = edges[(edgeNr - rotateCount + 4) % 4][4-i];
+			for (int i = 0; i < 5; i++) {
+				result[i] = edges[(edgeNr - rotateCount + 4) % 4][4 - i];
 			}
 			return result;
 		}
 		boolean[] result = new boolean[5];
-		for(int i = 0; i<5; i++) {
-			result[i] = edges[(edgeNr - rotateCount + 6) % 4][4-i];
+		for (int i = 0; i < 5; i++) {
+			result[i] = edges[(edgeNr - rotateCount + 6) % 4][4 - i];
 		}
 		return result;
-		
+
 	}
-	
+
 	public boolean[] getPureEdge(int edgeNr) {
 		return edges[edgeNr];
 	}
