@@ -27,7 +27,10 @@ public class Piece {
 	public int getRotateCount() {
 		return rotateCount;
 	}
+
+	public boolean isReflected = false;
 	private int nr;
+
 	public Piece() {
 		edges = new boolean[4][5];
 		rotateCount = 0;
@@ -43,10 +46,11 @@ public class Piece {
 		rotateCount = pieceToCopy.getRotateCount();
 		for (int i = 0; i < 4; i++) {
 			for (int j = 0; j < 5; j++) {
-				edges[i][j] = pieceToCopy.getEdge(i + pieceToCopy.getRotateCount())[j];
+				edges[i][j] = pieceToCopy.getPureEdge(i)[j];
 			}
 		}
 		this.nr = pieceToCopy.getNr();
+		this.isReflected = pieceToCopy.isReflected();
 	}
 
 	private void initializeRow(int rowNr, boolean[] rowContent) {
@@ -98,8 +102,13 @@ public class Piece {
 	 * Rotates the piece by 90 degrees
 	 */
 	public void rotate() {
-		rotateCount++;
-		rotateCount %= 4;
+		if (isReflected) {
+			rotateCount += 3;
+			rotateCount %= 4;
+		} else {
+			rotateCount++;
+			rotateCount %= 4;
+		}
 	}
 
 	/**
@@ -111,7 +120,7 @@ public class Piece {
 	public void printRow(int rowNr) {
 		switch (rowNr) {
 		case 0:
-			for (Boolean b : edges[(4 - rotateCount) % 4]) {
+			for (Boolean b : getEdge(0)) {
 				if (b) {
 					System.out.print("o");
 				} else {
@@ -121,7 +130,7 @@ public class Piece {
 			break;
 		case 4:
 			for (int i = 4; i >= 0; i--) {
-				if (edges[(6 - rotateCount) % 4][i]) {
+				if (getEdge(2)[i]) {
 					System.out.print("o");
 				} else {
 					System.out.print(" ");
@@ -129,13 +138,13 @@ public class Piece {
 			}
 			break;
 		default:
-			if (edges[(7 - rotateCount) % 4][4 - rowNr]) {
+			if (getEdge(3)[4 - rowNr]) {
 				System.out.print("o");
 			} else {
 				System.out.print(" ");
 			}
 			System.out.print("ooo");
-			if (edges[(5 - rotateCount) % 4][rowNr]) {
+			if (getEdge(1)[rowNr]) {
 				System.out.print("o");
 			} else {
 				System.out.print(" ");
@@ -151,7 +160,26 @@ public class Piece {
 	 * @return desired edge
 	 */
 	public boolean[] getEdge(int edgeNr) {
-		return edges[(edgeNr - rotateCount + 4) % 4];
+		if (!isReflected) {
+			return edges[(edgeNr - rotateCount + 4) % 4];
+		}
+		if(edgeNr == 0 || edgeNr == 2) {
+			boolean[] result = new boolean[5];
+			for(int i = 0; i<5; i++) {
+				result[i] = edges[(edgeNr - rotateCount + 4) % 4][4-i];
+			}
+			return result;
+		}
+		boolean[] result = new boolean[5];
+		for(int i = 0; i<5; i++) {
+			result[i] = edges[(edgeNr - rotateCount + 6) % 4][4-i];
+		}
+		return result;
+		
+	}
+	
+	public boolean[] getPureEdge(int edgeNr) {
+		return edges[edgeNr];
 	}
 
 	/**
@@ -177,7 +205,7 @@ public class Piece {
 		}
 		return result;
 	}
-	
+
 	public boolean isMatch(Piece piece, int edgeNr, int edgeNr2) {
 		boolean[] edge = getEdge(edgeNr);
 		boolean[] edge2 = piece.getEdge(edgeNr2);
@@ -200,5 +228,13 @@ public class Piece {
 	public void setNr(int nr) {
 		this.nr = nr;
 	}
-	
+
+	public boolean isReflected() {
+		return isReflected;
+	}
+
+	public void reflect() {
+		this.isReflected = !this.isReflected;
+	}
+
 }

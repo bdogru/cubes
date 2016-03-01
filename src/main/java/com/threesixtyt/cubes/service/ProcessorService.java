@@ -105,6 +105,15 @@ public class ProcessorService {
 			}
 			piece.rotate();
 		}
+		piece.reflect();
+		for (int rotateCount = 0; rotateCount < 4; rotateCount++) {
+			if (isMatch(board.getPiece(0, 0), piece, 1)) {
+				Board tmp = new Board(board);
+				tmp.putPiece(piece, 0, 1);
+				result.add(tmp);
+			}
+			piece.rotate();
+		}
 		return result;
 	}
 
@@ -119,11 +128,35 @@ public class ProcessorService {
 			}
 			piece.rotate();
 		}
+		piece.reflect();
+		for (int rotateCount = 0; rotateCount < 4; rotateCount++) {
+			if (isMatch(board.getPiece(0, 1), piece, 1)) {
+				Board tmp = new Board(board);
+				tmp.putPiece(piece, 0, 2);
+				result.add(tmp);
+			}
+			piece.rotate();
+		}
 		return result;
 	}
 
 	private List<Board> check11(Board board, Piece piece) {
 		List<Board> result = new ArrayList<Board>();
+		for (int rotateCount = 0; rotateCount < 4; rotateCount++) {
+			boolean match = board.getPiece(0, 1).isMatch(piece, 2) && board.getPiece(0, 0).isMatch(piece, 2, 3)
+					&& board.getPiece(0, 2).isMatch(piece, 2, 1)
+					&& checkCorners(board.getPiece(0, 0).getEdge(2)[0], board.getPiece(0, 1).getEdge(3)[0],
+							piece.getEdge(0)[0])
+					&& checkCorners(board.getPiece(0, 1).getEdge(2)[0], board.getPiece(0, 2).getEdge(3)[0],
+							piece.getEdge(1)[0]);
+			if (match) {
+				Board tmp = new Board(board);
+				tmp.putPiece(piece, 1, 1);
+				result.add(tmp);
+			}
+			piece.rotate();
+		}
+		piece.reflect();
 		for (int rotateCount = 0; rotateCount < 4; rotateCount++) {
 			boolean match = board.getPiece(0, 1).isMatch(piece, 2) && board.getPiece(0, 0).isMatch(piece, 2, 3)
 					&& board.getPiece(0, 2).isMatch(piece, 2, 1)
@@ -157,11 +190,45 @@ public class ProcessorService {
 			}
 			piece.rotate();
 		}
+		piece.reflect();
+		for (int rotateCount = 0; rotateCount < 4; rotateCount++) {
+			boolean match = board.getPiece(1, 1).isMatch(piece, 2) && board.getPiece(0, 0).isMatch(piece, 3, 3)
+					&& board.getPiece(0, 2).isMatch(piece, 1, 1)
+					&& checkCorners(board.getPiece(0, 0).getEdge(3)[0], board.getPiece(1, 1).getEdge(3)[0],
+							piece.getEdge(0)[0])
+					&& checkCorners(board.getPiece(1, 1).getEdge(2)[0], board.getPiece(0, 2).getEdge(2)[0],
+							piece.getEdge(1)[0]);
+			if (match) {
+				Board tmp = new Board(board);
+				tmp.putPiece(piece, 2, 1);
+				result.add(tmp);
+			}
+			piece.rotate();
+		}
 		return result;
 	}
 
 	private List<Board> check31(Board board, Piece piece) {
 		List<Board> result = new ArrayList<Board>();
+		for (int rotateCount = 0; rotateCount < 4; rotateCount++) {
+			boolean match = board.getPiece(2, 1).isMatch(piece, 2) && board.getPiece(0, 0).isMatch(piece, 0, 3)
+					&& board.getPiece(0, 2).isMatch(piece, 0, 1) && board.getPiece(0, 1).isMatch(piece, 0, 2)
+					&& checkCorners(board.getPiece(0, 0).getEdge(0)[0], board.getPiece(2, 1).getEdge(3)[0],
+							piece.getEdge(0)[0])
+					&& checkCorners(board.getPiece(0, 2).getEdge(1)[0], board.getPiece(2, 1).getEdge(2)[0],
+							piece.getEdge(1)[0])
+					&& checkCorners(board.getPiece(0, 0).getEdge(1)[0], board.getPiece(0, 1).getEdge(0)[0],
+							piece.getEdge(3)[0])
+					&& checkCorners(board.getPiece(0, 1).getEdge(1)[0], board.getPiece(0, 2).getEdge(0)[0],
+							piece.getEdge(2)[0]);
+			if (match) {
+				Board tmp = new Board(board);
+				tmp.putPiece(piece, 3, 1);
+				result.add(tmp);
+			}
+			piece.rotate();
+		}
+		piece.reflect();
 		for (int rotateCount = 0; rotateCount < 4; rotateCount++) {
 			boolean match = board.getPiece(2, 1).isMatch(piece, 2) && board.getPiece(0, 0).isMatch(piece, 0, 3)
 					&& board.getPiece(0, 2).isMatch(piece, 0, 1) && board.getPiece(0, 1).isMatch(piece, 0, 2)
