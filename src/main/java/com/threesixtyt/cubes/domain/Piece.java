@@ -102,13 +102,8 @@ public class Piece {
 	 * Rotates the piece by 90 degrees
 	 */
 	public void rotate() {
-		if (isReflected) {
-			rotateCount += 3;
-			rotateCount %= 4;
-		} else {
 			rotateCount++;
 			rotateCount %= 4;
-		}
 	}
 
 	/**
